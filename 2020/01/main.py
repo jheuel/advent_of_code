@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 
+def read_input(fn):
+    with open(fn) as f:
+        return [int(i) for i in f.read().split('\n') if len(i) > 0]
+
 def solve2(inp):
     for i, j in enumerate(inp):
         for k in inp[1+i:]:
@@ -8,19 +12,17 @@ def solve2(inp):
                 print(j * k)
 
 def solve3(inp):
-    for i in range(len(inp)):
-        for j in range(1 + i, len(inp)):
-            for k in range(1 + j, len(inp)):
-                m, n, o = inp[i], inp[j], inp[k]
+    for i, m in enumerate(inp):
+        for j, n in enumerate(inp[1 + i:]):
+            for o in inp[1 + i + j:]:
                 if (m + n + o) == 2020:
                     print(m * n * o)
 
 
-# fn = 'test'
-fn = 'input'
+for fn in ['test', 'input']:
+    print(fn)
+    inp = read_input(fn)
 
-with open(fn) as f:
-    inp = [int(i) for i in f.read().split('\n') if len(i) > 0]
-
-solve2(inp)
-solve3(inp)
+    solve2(inp)
+    solve3(inp)
+    print()
