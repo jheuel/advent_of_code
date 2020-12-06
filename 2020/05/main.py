@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import re
+
 
 def read_input(fn):
     with open(fn) as f:
@@ -7,64 +9,33 @@ def read_input(fn):
         return seats
 
 
-def part(x):
-    middle = (x[0] + x[1]) // 2
-    return (x[0], middle), (middle, x[1])
-
-
-def calc_seatID(row, column):
-    return 8 * row + column
-
-
-def seat(s):
-    rows = (0, 127)
-    columns = (0, 7)
-    for i in range(7):
-        front, back = part(rows)
-        if s[i] == 'F':
-            rows = front
-        elif s[i] == 'B':
-            rows = back
-        else:
-            print('wrong input')
-            exit(1)
-    for i in range(7, 10):
-        front, back = part(columns)
-        if s[i] == 'L':
-            columns = front
-        elif s[i] == 'R':
-            columns = back
-        else:
-            print('wrong input')
-            exit(1)
-    row = rows[1]
-    column = columns[1]
-    seatID = calc_seatID(row, column)
-    return seatID
+def from_code(code):
+    binary = {'F': '0', 'B': '1', 'L': '0', 'R': '1'}
+    return int(''.join([binary[i] for i in code]), 2)
 
 
 def solve1(fn):
     print(fn)
     print('part1:')
     inp = read_input(fn)
+
+    valid = re.compile('^([FB]{7})([LR]{3})$')
+
     ids = []
-    for i in inp:
-        ids.append(seat(i))
-    print(f'max seatID: {max(ids)}')
+    for code in inp:
+        match = valid.match(code)
+        if match is None:
+            raise ValueError(f'wrong format: {code}')
+        ids.append(from_code(code))
+
+    print(f'highest seat ID is {max(ids)}')
     return ids
 
 
 def solve2(ids):
     print('part2:')
-    ids.sort()
-    diffs = [ids[i + 1] - ids[i] for i in range(len(ids) - 1)]
-
-    if 2 not in diffs:
-        print('could not find seat')
-        return
-
-    my_seat = ids[diffs.index(2)] + 1
-    print(f'my seatID: {my_seat}')
+    seats = [i for i in range(min(ids), max(ids)) if i not in ids]
+    print(f'available seats: {seats}')
 
 
 for fn in ['test', 'input']:
