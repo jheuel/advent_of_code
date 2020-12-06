@@ -6,9 +6,10 @@ def read_input(fn):
         lines = [i for i in f.read().split('\n') if len(i) > 0]
         return lines
 
+
 def solve1(fn, slope):
     print(fn, end=': ')
-    inp =  read_input(fn)
+    inp = read_input(fn)
     xmax = len(inp[0])
     ymax = len(inp)
     x, y = [0, 0]

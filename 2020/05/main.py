@@ -6,12 +6,15 @@ def read_input(fn):
         seats = [i for i in f.read().split('\n') if len(i) > 0]
         return seats
 
+
 def part(x):
     middle = (x[0] + x[1]) // 2
     return (x[0], middle), (middle, x[1])
 
+
 def calc_seatID(row, column):
     return 8 * row + column
+
 
 def seat(s):
     rows = (0, 127)
@@ -39,6 +42,7 @@ def seat(s):
     seatID = calc_seatID(row, column)
     return seatID
 
+
 def solve1(fn):
     print(fn)
     print('part1:')
@@ -49,10 +53,11 @@ def solve1(fn):
     print(f'max seatID: {max(ids)}')
     return ids
 
+
 def solve2(ids):
-    print(f'part2:')
+    print('part2:')
     ids.sort()
-    diffs = [ids[i+1] - ids[i] for i in range(len(ids) - 1)]
+    diffs = [ids[i + 1] - ids[i] for i in range(len(ids) - 1)]
 
     if 2 not in diffs:
         print('could not find seat')

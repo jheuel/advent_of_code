@@ -1,15 +1,17 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 
 
 def read_input(fn):
     with open(fn) as f:
         return [int(i) for i in f.read().split('\n') if len(i) > 0]
 
+
 def solve2(inp):
     for i, j in enumerate(inp):
-        for k in inp[1+i:]:
+        for k in inp[1 + i:]:
             if (j + k) == 2020:
                 print(j * k)
+
 
 def solve3(inp):
     for i, m in enumerate(inp):
