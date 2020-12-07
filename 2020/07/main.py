@@ -23,8 +23,7 @@ def find_path(mybag, bag, inp):
     valid = [j for i in inp[bag] for j in find_path(mybag, i, inp)]
     if valid:
         return [bag] + valid
-    else:
-        return {}
+    return []
 
 
 def addup(bag, inp, times=1):
