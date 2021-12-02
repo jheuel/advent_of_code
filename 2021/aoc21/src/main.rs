@@ -17,15 +17,14 @@ fn cli() -> (u8, String) {
         println!("{}", &usage);
         std::process::exit(1);
     }
-    let day: u8 = args[1].parse::<u8>()
-        .expect(&usage);
+    let day: u8 = args[1].parse::<u8>().expect(&usage);
     if day < 1 || day > 24 {
         println!("{}", &usage);
         std::process::exit(1);
     }
 
-    let session = env::var("AoC")
-        .expect("Please set $AoC environment variable containing the session ID");
+    let session =
+        env::var("AoC").expect("Please set $AoC environment variable containing the session ID");
 
     (day, session)
 }

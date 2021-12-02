@@ -1,5 +1,4 @@
 pub fn solve(input: &str) {
-
     println!("Part1: {}", solve1(input))
 }
 
