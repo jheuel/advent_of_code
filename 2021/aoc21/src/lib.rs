@@ -25,7 +25,6 @@ pub fn download_input(session: &str, day: u8) -> String {
     let input = match input {
         Ok(input) => input,
         Err(_) => {
-            println!("http request");
             let url = format!("https://adventofcode.com/2021/day/{}/input", day);
             let url = reqwest::Url::parse(&url).expect("valid url");
 
