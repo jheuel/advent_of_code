@@ -32,10 +32,8 @@ fn solve1(fishes: &Vec<u8>, days: u16) -> u64 {
             generation[i] = generation[i + 1];
         }
 
-        for _ in 0..generation[0] {
-            generation[7] += 1;
-            generation[9] += 1;
-        }
+        generation[7] += generation[0];
+        generation[9] += generation[0];
     }
     generation[1..9].iter().sum()
 }

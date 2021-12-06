@@ -1,12 +1,17 @@
 use std::env;
 mod solutions;
+use std::time::Instant;
 
 fn main() {
     let (day, session) = cli();
 
     let input = aoc21::download_input(&session, day);
 
+    let now = Instant::now();
+
     solutions::solve(day, &input);
+
+    println!("solution finished in {:?} μs", now.elapsed().as_micros());
 }
 
 fn cli() -> (u8, String) {
