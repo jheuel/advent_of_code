@@ -19,12 +19,12 @@ fn cli() -> (u8, String) {
 
     let args: Vec<String> = env::args().collect();
     if args.len() != 2 {
-        println!("{}", &usage);
+        println!("{}", usage);
         std::process::exit(1);
     }
-    let day: u8 = args[1].parse::<u8>().expect(&usage);
-    if day < 1 || day > 24 {
-        println!("{}", &usage);
+    let day: u8 = args[1].parse::<u8>().expect(usage);
+    if !(1..=24).contains(&day) {
+        println!("{}", usage);
         std::process::exit(1);
     }
 

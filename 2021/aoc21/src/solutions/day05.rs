@@ -100,7 +100,7 @@ fn count<T>(map: &HashMap<T, u32>) -> u32 {
     })
 }
 
-fn solve1(lines: &Vec<Line>) -> u32 {
+fn solve1(lines: &[Line]) -> u32 {
     let mut field: HashMap<Vector, u32> = HashMap::new();
 
     for line in lines {
@@ -109,7 +109,7 @@ fn solve1(lines: &Vec<Line>) -> u32 {
             continue;
         }
 
-        let mut p = line.from.clone();
+        let mut p = line.from;
         *field.entry(p).or_insert(0) += 1;
         while p != line.to {
             p = p + d;
@@ -119,7 +119,7 @@ fn solve1(lines: &Vec<Line>) -> u32 {
     count(&field)
 }
 
-fn solve2(lines: &Vec<Line>) -> u32 {
+fn solve2(lines: &[Line]) -> u32 {
     let mut field: HashMap<Vector, u32> = HashMap::new();
 
     for line in lines {
@@ -129,7 +129,7 @@ fn solve2(lines: &Vec<Line>) -> u32 {
         }
         let d = d.signum();
 
-        let mut p = line.from.clone();
+        let mut p = line.from;
         *field.entry(p).or_insert(0) += 1;
         while p != line.to {
             p = p + d;

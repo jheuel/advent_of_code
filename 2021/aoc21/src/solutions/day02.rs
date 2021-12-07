@@ -14,13 +14,13 @@ fn parse(input: &str) -> Vec<(&str, i32)> {
             let distance = splits.next().expect("Could not read distance");
             let distance = distance
                 .parse::<i32>()
-                .expect(&format!("Could not parse distance to integer {}", distance));
+                .unwrap_or_else(|_| panic!("Could not parse distance to integer {}", distance));
             (direction, distance)
         })
         .collect()
 }
 
-fn solve1(input: &Vec<(&str, i32)>) -> i32 {
+fn solve1(input: &[(&str, i32)]) -> i32 {
     let mut horizontal_position = 0;
     let mut depth = 0;
 
@@ -35,7 +35,7 @@ fn solve1(input: &Vec<(&str, i32)>) -> i32 {
     horizontal_position * depth
 }
 
-fn solve2(input: &Vec<(&str, i32)>) -> i32 {
+fn solve2(input: &[(&str, i32)]) -> i32 {
     let mut horizontal_position = 0;
     let mut depth = 0;
     let mut aim = 0;

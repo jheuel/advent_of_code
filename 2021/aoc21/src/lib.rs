@@ -1,4 +1,3 @@
-use reqwest;
 use reqwest::header;
 use std::fs;
 
@@ -8,7 +7,8 @@ fn build_client(session: &str) -> reqwest::blocking::Client {
     let mut headers = header::HeaderMap::new();
     headers.insert(
         "cookie",
-        header::HeaderValue::from_str(&cookie).expect(&format!("invalid header value {}", &cookie)),
+        header::HeaderValue::from_str(&cookie)
+            .unwrap_or_else(|_| panic!("invalid header value {}", &cookie)),
     );
 
     reqwest::blocking::Client::builder()

@@ -23,7 +23,7 @@ impl Board {
 
     fn mark(&mut self, val: u32) {
         for line in self.data.iter_mut() {
-            for (entry, marked) in line.into_iter() {
+            for (entry, marked) in line.iter_mut() {
                 *marked = *marked || val == *entry;
             }
         }
@@ -94,7 +94,7 @@ fn parse(input: &str) -> (Vec<u32>, Vec<Board>) {
     (draw, boards)
 }
 
-fn solve1(draw: &Vec<u32>, boards: &Vec<Board>) -> u32 {
+fn solve1(draw: &[u32], boards: &[Board]) -> u32 {
     let mut boards: Vec<Board> = boards.to_vec();
 
     for &number in draw {
@@ -102,14 +102,14 @@ fn solve1(draw: &Vec<u32>, boards: &Vec<Board>) -> u32 {
             board.mark(number);
 
             if board.is_won() {
-                return &number * board.sum_unmarked();
+                return number * board.sum_unmarked();
             }
         }
     }
     0
 }
 
-fn solve2(draw: &Vec<u32>, boards: &Vec<Board>) -> u32 {
+fn solve2(draw: &[u32], boards: &[Board]) -> u32 {
     let mut boards: Vec<Board> = boards.to_vec();
 
     for &number in draw {
@@ -118,7 +118,7 @@ fn solve2(draw: &Vec<u32>, boards: &Vec<Board>) -> u32 {
         }
 
         if boards.len() == 1 && boards[0].is_won() {
-            return &number * boards[0].sum_unmarked();
+            return number * boards[0].sum_unmarked();
         }
 
         boards = boards.into_iter().filter(|board| !board.is_won()).collect();

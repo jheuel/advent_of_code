@@ -14,7 +14,7 @@ fn parse(input: &str) -> Vec<u8> {
         .collect()
 }
 
-fn solve1(fishes: &Vec<u8>, days: u16) -> u64 {
+fn solve1(fishes: &[u8], days: u16) -> u64 {
     const N_GENERATIONS: usize = 10;
 
     let mut generation = [0; N_GENERATIONS + 1];

@@ -13,12 +13,14 @@ fn parse(input: &str) -> (usize, Vec<i32>) {
         .len();
     let input = input
         .lines()
-        .map(|x| i32::from_str_radix(x, 2).expect(&format!("Could not parse number: {}", x)))
+        .map(|x| {
+            i32::from_str_radix(x, 2).unwrap_or_else(|_| panic!("Could not parse number: {}", x))
+        })
         .collect();
     (n, input)
 }
 
-fn solve1(n: usize, input: &Vec<i32>) -> i32 {
+fn solve1(n: usize, input: &[i32]) -> i32 {
     let (ones, zeroes) = count(n, input);
 
     let mut gamma = 0;
@@ -28,11 +30,11 @@ fn solve1(n: usize, input: &Vec<i32>) -> i32 {
             gamma += 1 << bit;
         }
     }
-    let epsilon = !gamma & (1 << n) - 1;
+    let epsilon = (!gamma & (1 << n)) - 1;
     gamma * epsilon
 }
 
-fn count(n: usize, input: &Vec<i32>) -> (Vec<i32>, Vec<i32>) {
+fn count(n: usize, input: &[i32]) -> (Vec<i32>, Vec<i32>) {
     let mut ones = vec![0; n];
     let mut zeroes = vec![0; n];
 
@@ -48,15 +50,15 @@ fn count(n: usize, input: &Vec<i32>) -> (Vec<i32>, Vec<i32>) {
     (ones, zeroes)
 }
 
-fn solve2(n: usize, input: &Vec<i32>) -> i32 {
+fn solve2(n: usize, input: &[i32]) -> i32 {
     let oxygen = find_rating(n, input, |x, y| x >= y);
     let carbon = find_rating(n, input, |x, y| x < y);
 
     oxygen * carbon
 }
 
-fn find_rating(n: usize, input: &Vec<i32>, compare_fn: fn(i32, i32) -> bool) -> i32 {
-    let mut input = input.clone();
+fn find_rating(n: usize, input: &[i32], compare_fn: fn(i32, i32) -> bool) -> i32 {
+    let mut input = input.to_vec();
 
     for bit in (0..n).rev() {
         let (ones, zeroes) = count(n, &input);
