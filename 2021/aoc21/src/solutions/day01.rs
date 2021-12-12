@@ -8,6 +8,7 @@ pub fn solve(input: &str) {
 fn parse(input: &str) -> Vec<i32> {
     input
         .lines()
+        .map(str::trim)
         .map(|x| {
             x.parse::<i32>()
                 .unwrap_or_else(|_| panic!("failed to parse {} into integer", x))
@@ -39,4 +40,32 @@ fn solve2(input: &[i32]) -> i32 {
         }
     }
     n_increases
+}
+
+#[cfg(test)]
+mod test {
+    use super::{parse, solve1, solve2};
+
+    static TEST_INPUT: &str = "199
+    200
+    208
+    210
+    200
+    207
+    240
+    269
+    260
+    263";
+
+    #[test]
+    fn part1() {
+        let input = parse(TEST_INPUT);
+        assert_eq!(solve1(&input), 7);
+    }
+
+    #[test]
+    fn part2() {
+        let input = parse(TEST_INPUT);
+        assert_eq!(solve2(&input), 5);
+    }
 }

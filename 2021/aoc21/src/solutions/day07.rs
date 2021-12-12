@@ -41,3 +41,24 @@ fn solve2(input: &[i32]) -> i32 {
         })
         .sum()
 }
+
+#[cfg(test)]
+mod test {
+    use super::{parse, solve1, solve2};
+
+    static TEST_INPUT: &str = "16,1,2,0,4,2,7,1,2,14";
+
+    #[test]
+    fn part1() {
+        let test_result = 37;
+        let input = &parse(TEST_INPUT);
+        assert_eq!(solve1(input), test_result);
+    }
+
+    #[test]
+    fn part2() {
+        let test_result = 168;
+        let input = &parse(TEST_INPUT);
+        assert_eq!(solve2(input), test_result);
+    }
+}

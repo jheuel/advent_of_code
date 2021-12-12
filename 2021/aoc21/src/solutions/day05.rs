@@ -88,7 +88,12 @@ pub fn solve(input: &str) {
 }
 
 fn parse(input: &str) -> Vec<Line> {
-    input.lines().map(|line| Line::from(line)).collect()
+    input
+        .trim()
+        .lines()
+        .map(str::trim)
+        .map(|line| Line::from(line))
+        .collect()
 }
 
 fn count<T>(map: &HashMap<T, u32>) -> u32 {
@@ -137,4 +142,33 @@ fn solve2(lines: &[Line]) -> u32 {
         }
     }
     count(&field)
+}
+
+#[cfg(test)]
+mod test {
+    use super::{parse, solve1, solve2};
+
+    static TEST_INPUT: &str = "
+        0,9 -> 5,9
+        8,0 -> 0,8
+        9,4 -> 3,4
+        2,2 -> 2,1
+        7,0 -> 7,4
+        6,4 -> 2,0
+        0,9 -> 2,9
+        3,4 -> 1,4
+        0,0 -> 8,8
+        5,5 -> 8,2";
+
+    #[test]
+    fn part1() {
+        let input = &parse(TEST_INPUT);
+        assert_eq!(solve1(input), 5);
+    }
+
+    #[test]
+    fn part2() {
+        let input = &parse(TEST_INPUT);
+        assert_eq!(solve2(input), 12);
+    }
 }

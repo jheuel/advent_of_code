@@ -10,9 +10,11 @@ fn parse(input: &str) -> (usize, Vec<i32>) {
         .lines()
         .next()
         .expect("Expect at least one line of input")
+        .trim()
         .len();
     let input = input
         .lines()
+        .map(str::trim)
         .map(|x| {
             i32::from_str_radix(x, 2).unwrap_or_else(|_| panic!("Could not parse number: {}", x))
         })
@@ -30,7 +32,7 @@ fn solve1(n: usize, input: &[i32]) -> i32 {
             gamma += 1 << bit;
         }
     }
-    let epsilon = (!gamma & (1 << n)) - 1;
+    let epsilon = !gamma & ((1 << n) - 1);
     gamma * epsilon
 }
 
@@ -75,4 +77,34 @@ fn find_rating(n: usize, input: &[i32], compare_fn: fn(i32, i32) -> bool) -> i32
         }
     }
     input[0]
+}
+
+#[cfg(test)]
+mod test {
+    use super::{parse, solve1, solve2};
+
+    static TEST_INPUT: &str = "00100
+        11110
+        10110
+        10111
+        10101
+        01111
+        00111
+        11100
+        10000
+        11001
+        00010
+        01010";
+
+    #[test]
+    fn part1() {
+        let (n, input) = parse(TEST_INPUT);
+        assert_eq!(solve1(n, &input), 198);
+    }
+
+    #[test]
+    fn part2() {
+        let (n, input) = parse(TEST_INPUT);
+        assert_eq!(solve2(n, &input), 230);
+    }
 }
